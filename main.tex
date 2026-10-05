@@ -1,0 +1,1496 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{amsmath,amssymb}
+\usetheme{Madrid}
+
+\title{First-Order Logic}
+\author{}
+\date{}
+
+\begin{document}
+
+%------------------------------------------------
+%------------------------------------------------
+%------------------------------------------------
+%------------------------------------------------
+\section{First Order Logic}
+\begin{frame}{Question 1}
+\textbf{Domain:} Integers.
+
+\textbf{Predicate:} $L(x,y)$: ``$x<y$.''
+
+\begin{enumerate}
+    \item Translate:
+    ``For every integer $y$, there exists an integer $x$ such that $x<y$.''
+
+    \item Translate:
+    ``There exists an integer $x$ such that for every integer $y$,
+    $x<y$.''
+
+    \item Are these two statements equivalent? Explain using
+    standard arithmetic.
+\end{enumerate}
+
+\begin{block}{Answer}
+\begin{enumerate}
+    \item $\forall y\,\exists x\,L(x,y)$
+    \item $\exists x\,\forall y\,L(x,y)$
+    \item Not equivalent.
+\end{enumerate}
+
+$\forall y\,\exists x\,L(x,y)$ is \textbf{True}: for any $y$, choose $x=y-1$.
+
+$\exists x\,\forall y\,L(x,y)$ is \textbf{False}: no single integer is smaller than every integer.
+
+\textbf{Conclusion:} Different quantifier orders can have different truth values.
+\end{block}
+
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Question 2}
+
+\textbf{Domain:} Natural numbers.
+
+\textbf{Function:} $s(x)$: successor of $x$ (i.e., $x+1$).
+
+\textbf{Predicate:} $E(x)$: ``$x$ is even.''
+
+
+\textbf{Express the following in first-order logic:}
+
+\begin{enumerate}
+    \item Zero is even. (Assume constant $0$.)
+    
+    \item If $x$ is even, then $s(s(x))$ is even.
+    
+    \item There exists an even number.
+\end{enumerate}
+
+\begin{block}{Answer}
+\begin{enumerate}
+    \item $ E(0)$
+    \item 
+    $\forall x\,(E(x)\to E(s(s(x))))$
+    \item 
+    $\exists x\,E(x)$
+    
+\end{enumerate}
+\end{block}
+
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Question 3}
+
+\textbf{Negate and simplify }
+
+\begin{enumerate}
+    \item
+    $\forall x\,(P(x)\to Q(x))$
+    \item
+    $\exists x\,(P(x)\land\forall y\,R(x,y))$
+\end{enumerate}
+\begin{block}{Answer}
+
+\textbf{1.}
+
+\[
+\begin{aligned}
+\neg\forall x\,(P(x)\to Q(x))
+&\equiv \exists x\,\neg(P(x)\to Q(x))\\
+&\equiv \exists x\,(P(x)\land\neg Q(x)).
+\end{aligned}
+\]
+
+
+\textbf{2.}
+
+\[
+\begin{aligned}
+\neg\exists x\,(P(x)\land\forall y\,R(x,y))
+&\equiv \forall x\,\neg(P(x)\land\forall y\,R(x,y))\\
+&\equiv \forall x\,(\neg P(x)\lor\neg\forall y\,R(x,y))\\
+&\equiv \forall x\,(\neg P(x)\lor\exists y\,\neg R(x,y)).
+\end{aligned}
+\]
+
+\end{block}
+\end{frame}
+
+\begin{frame}{Question 4}
+Given
+$$
+\varphi=\forall x\,\exists y\,P(x,y),
+$$
+which of the following is equivalent to $\neg\varphi$?
+
+\begin{enumerate}
+    \item[(A)] $\exists x\,\forall y\,\neg P(x,y)$
+    \item[(B)] $\forall x\,\exists y\,\neg P(x,y)$
+    \item[(C)] $\exists x\,\neg(\exists y\,P(x,y))$
+    \item[(D)] $\neg\forall x\,\exists y\,P(x,y)$
+\end{enumerate}
+\begin{block}{Answer: (A), (C), and (D)}
+$$
+\neg\forall x\,\exists y\,P(x,y)
+\equiv
+\exists x\,\neg\exists y\,P(x,y)
+\equiv
+\exists x\,\forall y\,\neg P(x,y)
+$$
+
+Hence, the correct answers are
+$$
+\text{(A), (C), and (D)}.
+$$
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 5}
+Which one of the following first-order logic formulas is \textbf{valid}
+(true in every interpretation with a non-empty domain)?
+
+\begin{enumerate}
+    \item[(A)]
+    $$\forall x\,(P(x)\lor Q(x))
+    \to
+    (\forall x\,P(x)\lor\forall x\,Q(x))$$
+
+    \item[(B)]
+    $$\exists x\,(P(x)\land Q(x))
+    \leftrightarrow
+    (\exists x\,P(x)\land\exists x\,Q(x))$$
+
+    \item[(C)]
+    $$\forall x\,(P(x)\to Q(x))
+    \to
+    (\forall x\,P(x)\to\forall x\,Q(x))$$
+
+    \item[(D)]
+    $$\exists x\,(P(x)\to Q(x))
+    \to
+    (\exists x\,P(x)\to\exists x\,Q(x))$$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (C)}
+\textbf{(A):} Not valid. $P$ and $Q$ can hold for different elements.
+
+\textbf{(B):} Not valid. $P$ and $Q$ may each hold for some element,
+but not for the same element.
+
+\textbf{(C):} Valid. If
+$$
+\forall x(P(x)\to Q(x))
+\quad\text{and}\quad
+\forall xP(x),
+$$
+then for every $x$, $P(x)$ is true. Hence $Q(x)$ is also true:
+$$
+\forall xQ(x).
+$$
+
+\textbf{(D):} Not valid. The witness for
+$$
+\exists x(P(x)\to Q(x))
+$$
+may be an element where $P(x)$ is false, while $\exists xP(x)$
+is true and $\exists xQ(x)$ is false.
+
+Therefore,
+$$
+\boxed{\text{(C)}}
+$$
+is valid.
+\end{block}
+\end{frame}
+
+
+%------------------------------------------------
+\section{Modus Ponens and Modus Tollens}
+\begin{frame}{Question 1}
+Given:
+
+\begin{itemize}
+    \item Premise 1: If a number is divisible by 4, then it is even.
+    \item Premise 2: The number is even.
+    \item Conclusion: Therefore, the number is divisible by 4.
+\end{itemize}
+
+Which statement is correct?
+
+\begin{enumerate}
+    \item[(A)] The argument is valid by Modus Ponens.
+    \item[(B)] The argument is valid by Modus Tollens.
+    \item[(C)] The argument is invalid (fallacy of affirming the consequent).
+    \item[(D)] The argument is invalid (fallacy of denying the antecedent).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (C)}
+Let
+$$
+p:\text{number is divisible by 4},\qquad
+q:\text{number is even}.
+$$
+
+The argument has the form
+$$
+p\to q,\qquad q,\qquad\therefore p.
+$$
+
+This is \textbf{affirming the consequent}, which is invalid.
+
+For example,
+$$
+6\text{ is even, but }6\text{ is not divisible by }4.
+$$
+
+Hence,
+$$
+\boxed{\text{(C)}}
+$$
+\end{block}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Question 2}
+Given the premises:
+
+\begin{enumerate}
+    \item If the server is down, then users cannot log in.
+    \item Users can log in.
+\end{enumerate}
+$$
+p:\text{server is down},\qquad
+q:\text{users cannot log in}.
+$$
+$$
+p\to q,\qquad \neg q.
+$$
+
+Which conclusion is logically valid?
+
+\begin{enumerate}
+    \item[(A)] $p$
+    \item[(B)] $\neg p$
+    \item[(C)] $q\to p$
+    \item[(D)] Nothing definite can be concluded.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (B) only}
+The premises are
+$$
+p\to q,\qquad \neg q.
+$$
+
+By \textbf{Modus Tollens},
+$$
+p\to q,\quad \neg q
+\;\Rightarrow\;
+\neg p.
+$$
+
+Therefore, the server is not down.
+
+Option (C) is only the converse of the given implication, and
+option (D) is false because $\neg p$ can be concluded.
+
+Hence,
+$$
+\boxed{\text{(B)}}
+$$
+\end{block}
+\end{frame}
+\begin{frame}{Question 3}
+\textbf{Argument:}
+
+\begin{itemize}
+    \item Premise 1: \hspace{1cm}
+    \item Premise 2: The alarm is not ringing.
+    \item Conclusion: Therefore, there is no fire.
+\end{itemize}
+
+
+$$
+p:\text{there is a fire},\qquad q:\text{alarm is ringing}.
+$$
+
+$$
+\neg q \quad\text{and}\quad \neg p.
+$$
+
+Which choice for Premise 1 makes this a correct use of Modus Tollens?
+
+\begin{enumerate}
+    \item[(A)] $p\to q$
+    \item[(B)] $q\to p$
+    \item[(C)] $p$
+    \item[(D)] $q$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (A)}
+Modus Tollens has the form
+$$
+p\to q,\qquad \neg q
+\;\Rightarrow\;
+\neg p.
+$$
+
+Therefore, Premise 1 must be
+$$
+p\to q.
+$$
+
+Hence,
+$$
+\boxed{\text{(A)}}
+$$
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Question 4}
+\textbf{Argument:}
+
+\begin{itemize}
+    \item Premise 1: \hspace{1cm}
+    \item Premise 2: The switch is ON.
+    \item Conclusion: Therefore, the light is ON.
+\end{itemize}
+
+$$
+p:\text{switch is ON},\qquad q:\text{light is ON}.
+$$
+$$
+p\quad\text{and}\quad q.
+$$
+
+Which choice for Premise 1 makes this a correct use of Modus Ponens?
+
+\begin{enumerate}
+    \item[(A)] $q\to p$
+    \item[(B)] $p\to q$
+    \item[(C)] $q$
+    \item[(D)] $\neg p$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (B)}
+Modus Ponens has the form
+$$
+p\to q,\qquad p
+\;\Rightarrow\;
+q.
+$$
+
+Therefore, Premise 1 must be
+$$
+p\to q.
+$$
+
+Hence,
+$$
+\boxed{\text{(B)}}
+$$
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Question 5}
+\textbf{Which arguments are valid?}
+$$
+p:\text{battery is dead},\qquad
+q:\text{phone will not start}.
+$$
+
+\textbf{Argument I:}
+$$
+p\to q,\qquad q,\qquad\therefore p
+$$
+
+\textbf{Argument II:}
+$$
+p\to q,\qquad p,\qquad\therefore q
+$$
+
+\textbf{Argument III:}
+$$
+p\to q,\qquad \neg q,\qquad\therefore\neg p
+$$
+
+\begin{enumerate}
+    \item[(A)] I only
+    \item[(B)] II only
+    \item[(C)] II and III only
+    \item[(D)] I, II, and III
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Answer: (C)}
+\textbf{I:} 
+$$
+p\to q,\quad q\;\therefore p
+$$
+Affirming the consequent $\Rightarrow$ \textbf{invalid}.
+
+\textbf{II:}
+$$
+p\to q,\quad p\;\therefore q
+$$
+Modus Ponens $\Rightarrow$ \textbf{valid}.
+
+\textbf{III:}
+$$
+p\to q,\quad \neg q\;\therefore\neg p
+$$
+Modus Tollens $\Rightarrow$ \textbf{valid}.
+
+Therefore, the valid arguments are
+$$
+\boxed{\text{II and III only}}
+$$
+\end{block}
+\end{frame}
+%-----------------------------------------------
+\section{Tautology and Contradiction}
+\begin{frame}{Question 1}
+
+Let $p,q$ be propositional variables.
+
+Consider the formula
+$$
+F_6:\quad (p\to q)\leftrightarrow(\neg q\to\neg p)
+$$
+
+Which of the following is correct?
+
+\begin{enumerate}
+    \item[(A)] $F_6$ is a \textbf{tautology}.
+    \item[(B)] $F_6$ is a \textbf{contradiction}.
+    \item[(C)] $F_6$ is a \textbf{contingency}.
+    \item[(D)] $F_6$ is equivalent to $p\land q$.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (A)}
+$$
+\neg q\to\neg p
+$$
+is the \textbf{contrapositive} of
+$$
+p\to q.
+$$
+
+A statement and its contrapositive always have the same truth value.
+
+Therefore,
+$$
+(p\to q)\leftrightarrow(\neg q\to\neg p)
+$$
+is always true.
+
+Hence,
+$$
+\boxed{\text{(A) }F_6\text{ is a tautology.}}
+$$
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 2}
+
+Let $p,q$ be propositional variables.
+
+Consider the formula
+$$
+F_7:\quad (p\land q)\land(\neg p\lor\neg q)
+$$
+
+Which of the following is correct?
+
+\begin{enumerate}
+    \item[(A)] $F_7$ is a \textbf{tautology}.
+    \item[(B)] $F_7$ is a \textbf{contradiction}.
+    \item[(C)] $F_7$ is a \textbf{contingency}.
+    \item[(D)] $F_7$ is equivalent to $p\lor q$.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+$$
+p\land q
+$$
+requires both $p$ and $q$ to be true.
+
+But
+$$
+\neg p\lor\neg q
+$$
+requires at least one of $p,q$ to be false.
+
+Therefore, both parts cannot be true at the same time.
+
+Hence,
+$$
+(p\land q)\land(\neg p\lor\neg q)
+$$
+is always false.
+
+Thus,
+$$
+\boxed{\text{(B) }F_7\text{ is a contradiction.}}
+$$
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 3}
+
+\textbf{Domain:} All people.
+
+\textbf{Predicates:}
+$$
+S(x):\text{``$x$ is a student''},\qquad
+H(x):\text{``$x$ is hardworking''}
+$$
+
+The statement ``Some students are not hardworking'' is represented as:
+
+\begin{enumerate}
+    \item[(A)] $\exists x\,(S(x)\land\neg H(x))$
+    \item[(B)] $\exists x\,(S(x)\to\neg H(x))$
+    \item[(C)] $\forall x\,(S(x)\to\neg H(x))$
+    \item[(D)] $\neg\exists x\,(S(x)\land H(x))$
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (A)}
+``Some students are not hardworking'' means:
+
+There exists a person who is a student and is not hardworking.
+
+$$
+\exists x\,(S(x)\land\neg H(x))
+$$
+
+Therefore,
+$$
+\boxed{\text{(A)}}
+$$
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 4}
+
+Let $p$ be a propositional variable.
+
+Consider the formula
+$$
+F_{10}:\quad (p\to p)\land\neg(p\lor\neg p)
+$$
+
+Which of the following is correct?
+
+\begin{enumerate}
+    \item[(A)] $F_{10}$ is a \textbf{tautology}.
+    \item[(B)] $F_{10}$ is a \textbf{contradiction}.
+    \item[(C)] $F_{10}$ is a \textbf{contingency}.
+    \item[(D)] $F_{10}$ is equivalent to $p$.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+$$
+p\to p
+$$
+is always true.
+
+Also,
+$$
+p\lor\neg p
+$$
+is always true, so
+$$
+\neg(p\lor\neg p)
+$$
+is always false.
+
+Therefore,
+$$
+F_{10}=\text{True}\land\text{False}
+=\text{False}.
+$$
+
+Hence,
+$$
+\boxed{\text{(B) }F_{10}\text{ is a contradiction.}}
+$$
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 5}
+
+Let $p,q$ be propositional variables.
+
+The formula
+$$
+(p\land q)\lor(\neg p\land\neg q)
+$$
+is:
+
+\begin{enumerate}
+    \item[(A)] A tautology
+    \item[(B)] A contradiction
+    \item[(C)] A contingency
+    \item[(D)] Equivalent to $p\lor q$
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (C)}
+The formula is true when $p$ and $q$ have the \textbf{same truth value}.
+
+For $p=T,q=T$:
+$$
+(T\land T)\lor(F\land F)=T.
+$$
+
+For $p=F,q=F$:
+$$
+(F\land F)\lor(T\land T)=T.
+$$
+
+For $p=T,q=F$:
+$$
+(T\land F)\lor(F\land T)=F.
+$$
+
+Thus, the formula is sometimes true and sometimes false.
+
+$$
+\boxed{\text{(C) A contingency}}
+$$
+\end{block}
+
+\end{frame}
+\section{Mathematical Induction}
+\begin{frame}{Question 1}
+
+Consider the following pseudo-code:
+
+\begin{center}
+\texttt{
+\begin{tabular}{l}
+x := 0\\
+y := 0\\
+while (n > 0) \{\\
+\quad x := x + 1\\
+\quad y := y + 2\\
+\quad n := n - 1\\
+\}
+\end{tabular}
+}
+\end{center}
+
+Initially, $n=N$ for some positive integer.
+
+Which of the following is a correct \textbf{loop invariant}?
+
+\begin{enumerate}
+    \item[(A)] $x+y=n$
+    \item[(B)] $y=2x$
+    \item[(C)] $x=2y$
+    \item[(D)] $x=n$
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+Initially,
+$$
+x=0,\qquad y=0
+$$
+so
+$$
+y=2x.
+$$
+
+After one iteration,
+$$
+x'=x+1,\qquad y'=y+2.
+$$
+
+If $y=2x$, then
+$$
+y'=y+2
+=2x+2
+=2(x+1)
+=2x'.
+$$
+
+Thus, $y=2x$ remains true after every iteration.
+
+Therefore,
+$$
+\boxed{\text{(B) }y=2x}
+$$
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 2}
+
+You want to prove a property $P(n)$ for all integers $n\geq2$,
+where the proof for $P(k)$ may depend on all previous cases
+$P(2),P(3),\ldots,P(k-1)$.
+
+Which proof method is most appropriate?
+
+\begin{enumerate}
+    \item[(A)] Simple mathematical induction
+    \item[(B)] Strong induction
+    \item[(C)] Proof by contradiction only
+    \item[(D)] Structural induction
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+In \textbf{strong induction}, we may assume all previous cases
+$$
+P(2),P(3),\ldots,P(k)
+$$
+to prove
+$$
+P(k+1).
+$$
+
+Since the proof can depend on all earlier cases, strong induction
+is the appropriate method.
+
+$$
+\boxed{\text{(B) Strong induction}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 3}
+
+Arithmetic expressions are built as follows:
+
+\begin{itemize}
+    \item Any integer constant $c$ is an expression.
+    \item If $E_1,E_2$ are expressions, then $(E_1+E_2)$ is an expression.
+    \item If $E_1,E_2$ are expressions, then $(E_1\times E_2)$ is an expression.
+\end{itemize}
+
+You want to prove:
+
+\begin{quote}
+In every expression, the number of operators is one less than
+the number of constants.
+\end{quote}
+
+Which correctly describes a structural induction proof?
+
+\begin{enumerate}
+    \item[(A)] Base case for a constant; inductive step for
+    $(E_1+E_2)$ and $(E_1\times E_2)$.
+    \item[(B)] Only prove the property for constants.
+    \item[(C)] Assume the property for $(E_1+E_2)$ and prove it for constants.
+    \item[(D)] Use simple induction on the numeric value of the constants.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (A)}
+\textbf{Base case:} For one constant,
+$$
+\text{operators}=0,\qquad \text{constants}=1.
+$$
+
+Thus,
+$$
+0=1-1.
+$$
+
+\textbf{Inductive step:} Assume the property holds for $E_1$ and
+$E_2$. Adding $+$ or $\times$ adds exactly one operator, so the
+property remains true.
+
+Hence,
+$$
+\boxed{\text{(A)}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 4}
+
+Consider the algorithm:
+
+\begin{center}
+\texttt{
+\begin{tabular}{l}
+result := 1\\
+i := 0\\
+while (i < N) \{\\
+\quad result := result * 2\\
+\quad i := i + 1\\
+\}
+\end{tabular}
+}
+\end{center}
+
+Which is a suitable invariant to prove that at the end,
+$result=2^N$?
+
+\begin{enumerate}
+    \item[(A)] At the start of each iteration, $result=2^i$.
+    \item[(B)] At the start of each iteration, $result=2^N$.
+    \item[(C)] At the start of each iteration, $result=i^2$.
+    \item[(D)] At the start of each iteration, $result=2^{N-i}$.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (A)}
+Initially,
+$$
+result=1=2^0=2^i.
+$$
+
+After one iteration,
+$$
+result'=2^i\cdot2=2^{i+1},
+\qquad i'=i+1.
+$$
+
+Thus,
+$$
+result'=2^{i'}.
+$$
+
+When the loop ends, $i=N$, so
+$$
+result=2^N.
+$$
+
+Therefore,
+$$
+\boxed{\text{(A) }result=2^i}
+$$
+is the correct invariant.
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 5}
+
+Consider the following algorithm for a non-negative integer $N$:
+
+\begin{center}
+\texttt{
+\begin{tabular}{l}
+sum := 0\\
+i := 0\\
+while (i <= N) \{\\
+\quad sum := sum + i\\
+\quad i := i + 1\\
+\}
+\end{tabular}
+}
+\end{center}
+
+At the end,
+$$
+sum=0+1+2+\cdots+N=\frac{N(N+1)}{2}.
+$$
+
+Which of the following is a suitable \textbf{loop invariant}?
+
+\begin{enumerate}
+    \item[(A)] At the start of each iteration, 
+    $sum=\frac{i(i+1)}{2}$.
+    
+    \item[(B)] At the start of each iteration, 
+    $sum=\frac{N(N+1)}{2}$.
+    
+    \item[(C)] At the start of each iteration, 
+    $sum=i^2$.
+    
+    \item[(D)] At the start of each iteration, 
+    $sum=\frac{(i-1)i}{2}$.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (D)}
+Initially,
+$$
+i=0,\qquad sum=0.
+$$
+
+Thus,
+$$
+\frac{(i-1)i}{2}
+=\frac{(-1)(0)}{2}=0,
+$$
+so the invariant holds initially.
+
+Assume
+$$
+sum=\frac{(i-1)i}{2}.
+$$
+
+After adding $i$,
+$$
+sum+i
+=
+\frac{(i-1)i}{2}+i
+=
+\frac{i(i+1)}{2}.
+$$
+\end{block}
+\end{frame}
+
+\begin{frame}
+    \begin{block}
+        
+Then $i$ becomes $i+1$. Therefore,
+$$
+sum=\frac{((i+1)-1)(i+1)}{2}.
+$$
+
+Hence the invariant is preserved.
+
+When the loop ends,
+$$
+i=N+1.
+$$
+
+Therefore,
+$$
+sum=\frac{N(N+1)}{2}.
+$$
+
+So the correct answer is
+$$
+\boxed{\text{(D)}}
+$$
+\end{block}
+
+\end{frame}
+\section{Russell's Paradox}
+\begin{frame}{Question 1}
+
+Let $S$ be a set defined by
+$$
+S=\{\,x\mid x\text{ is a set and }x\notin x\,\}.
+$$
+
+Consider the statement: ``$S\in S$''.
+
+Which of the following is correct?
+
+\begin{enumerate}
+    \item[(A)] $S\in S$ must be true.
+    \item[(B)] $S\in S$ must be false.
+    \item[(C)] Assuming $S\in S$ leads to a contradiction, and assuming
+    $S\notin S$ also leads to a contradiction.
+    \item[(D)] The statement $S\in S$ is always true in standard mathematics.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+
+\begin{block}{Answer: (C)}
+If
+$$
+S\in S,
+$$
+then by the definition of $S$,
+$$
+S\notin S,
+$$
+which is a contradiction.
+
+On the other hand, if
+$$
+S\notin S,
+$$
+then $S$ satisfies the defining condition of $S$, so
+$$
+S\in S,
+$$
+which is also a contradiction.
+
+Thus both assumptions lead to contradictions.
+
+$$
+\boxed{\text{(C)}}
+$$
+
+This is known as \textbf{Russell's Paradox}.
+\end{block}
+
+\end{frame}
+\begin{frame}{Question 2}
+
+In a certain (naive) set theory, assume:
+
+\begin{quote}
+For any property $P(x)$, the collection $\{x\mid P(x)\}$ is a set.
+\end{quote}
+
+Let
+$$
+R=\{x\mid x\notin x\}.
+$$
+
+What can be concluded about $R$?
+
+\begin{enumerate}
+    \item[(A)] $R$ is a well-defined set with no problems.
+    \item[(B)] $R$ is a set, and either $R\in R$ or $R\notin R$, with no contradiction.
+    \item[(C)] Treating $R$ as a set leads to a logical contradiction.
+    \item[(D)] $R$ must be the empty set.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (C)}
+By definition,
+$$
+x\in R\iff x\notin x.
+$$
+
+Put $x=R$:
+$$
+R\in R\iff R\notin R.
+$$
+
+Thus, assuming $R$ is a set leads to a logical contradiction.
+
+Therefore,
+$$
+\boxed{\text{(C)}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Question 3}
+
+Suppose we allow the following principle in set theory:
+
+\begin{quote}
+For any property $P$, there exists a set of all objects satisfying $P$.
+\end{quote}
+
+Let
+$$
+A=\{x\mid x\text{ is a set and }x\notin x\}.
+$$
+
+Which of the following statements are correct?
+
+\begin{enumerate}
+    \item[(A)] $A\in A\Rightarrow A\notin A$.
+    \item[(B)] $A\notin A\Rightarrow A\in A$.
+    \item[(C)] There is no contradiction in assuming $A$ is a set.
+    \item[(D)] The existence of $A$ as a set causes a logical inconsistency.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (A), (B), (D)}
+By definition,
+$$
+x\in A\iff x\notin x.
+$$
+
+Putting $x=A$:
+
+If $A\in A$, then
+$$
+A\notin A.
+$$
+
+If $A\notin A$, then $A$ satisfies the defining property, so
+$$
+A\in A.
+$$
+
+Thus both implications hold, producing a contradiction.
+
+Therefore, (A), (B), and (D) are correct.
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Question 4}
+
+Let
+$$
+T=\{x\mid x\text{ is a set and }x\notin x\}.
+$$
+
+Write the logical equivalence that defines membership in $T$, and then
+substitute $x=T$ to show the contradictory situation.
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer}
+The definition of $T$ gives
+$$
+\forall x\;(x\in T\iff x\notin x).
+$$
+
+Substituting $x=T$:
+$$
+T\in T\iff T\notin T.
+$$
+
+Thus $T$ is an element of itself if and only if it is not an element
+of itself, which is a contradiction.
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Question 5}
+
+In a naive set theory where any property defines a set, consider
+$$
+C=\{x\mid x\text{ is a set and }x\notin x\}.
+$$
+
+Which of the following best describes the situation?
+
+\begin{enumerate}
+    \item[(A)] $C$ is a perfectly consistent set; either $C\in C$ or
+    $C\notin C$, and both are possible in different models.
+    
+    \item[(B)] $C$ cannot be an element of any set, but can exist as a
+    set itself.
+    
+    \item[(C)] If $C$ is assumed to be a set, then we derive
+    $C\in C$ if and only if $C\notin C$.
+    
+    \item[(D)] $C$ must be equal to the universal set of all sets.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Answer: (C)}
+By definition,
+$$
+x\in C\iff x\notin x.
+$$
+
+Putting $x=C$ gives
+$$
+C\in C\iff C\notin C.
+$$
+
+Therefore, assuming $C$ is a set leads directly to a contradictory
+equivalence.
+
+Hence,
+$$
+\boxed{\text{(C)}}
+$$
+\end{block}
+
+\end{frame}
+\section{Proofs}
+%------------------------------------------------
+\begin{frame}{Question 1}
+
+Let $a,b,c$ be integers. Consider:
+
+\begin{quote}
+If $a\mid b$ and $a\mid c$, then $a\mid(b+c)$.
+\end{quote}
+
+Which proof pattern is used?
+
+\begin{enumerate}
+    \item[(A)] Assume $a\mid(b+c)$ and prove $a\mid b$ and $a\mid c$.
+    \item[(B)] Assume $a\mid b$ and $a\mid c$, then prove $a\mid(b+c)$.
+    \item[(C)] Assume $a\nmid(b+c)$ and prove $a\nmid b$ or $a\nmid c$.
+    \item[(D)] Assume $a\mid b$ or $a\mid c$, then prove $a\mid(b+c)$.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+To prove
+$$
+P\land Q\Rightarrow R,
+$$
+we assume $P$ and $Q$ and then prove $R$.
+
+Here,
+$$
+a\mid b,\qquad a\mid c
+$$
+are assumed, and we prove
+$$
+a\mid(b+c).
+$$
+
+Therefore, the correct proof pattern is
+
+$$
+\boxed{\text{(B)}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 2}
+
+To prove: For any real $x$,
+$$
+|x|^2=x^2.
+$$
+
+Which proof method is most natural?
+
+\begin{enumerate}
+    \item[(A)] Proof by contradiction
+    \item[(B)] Proof by cases
+    \item[(C)] Strong induction
+    \item[(D)] Structural induction
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+Consider two cases.
+
+\textbf{Case 1:} $x\geq0$.
+Then
+$$
+|x|=x\quad\Rightarrow\quad |x|^2=x^2.
+$$
+
+\textbf{Case 2:} $x<0$.
+Then
+$$
+|x|=-x\quad\Rightarrow\quad |x|^2=(-x)^2=x^2.
+$$
+
+Thus the statement is proved by considering the two possible cases.
+
+$$
+\boxed{\text{(B) Proof by cases}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 3}
+
+Which of the following is best proved by \textbf{contradiction}?
+
+\begin{enumerate}
+    \item[(A)] If $n$ is even, then $n+2$ is even.
+    \item[(B)] There is no largest integer.
+    \item[(C)] $A\cup B=B\cup A$ for all sets $A,B$.
+    \item[(D)] If $a=b$, then $a-b=0$.
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (B)}
+Assume, for contradiction, that there is a largest integer $M$.
+
+But
+$$
+M+1>M,
+$$
+so $M+1$ is an integer larger than $M$.
+
+This contradicts the assumption that $M$ was the largest integer.
+
+Therefore, there is no largest integer.
+
+$$
+\boxed{\text{(B)}}
+$$
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Question 4}
+
+For any sets $A,B,C$, which identities are always true?
+
+\begin{enumerate}
+    \item[(A)] $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$
+    \item[(B)] $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$
+    \item[(C)] $A\setminus(B\cup C)=(A\setminus B)\cup(A\setminus C)$
+    \item[(D)] $A\setminus(B\cap C)=(A\setminus B)\cap(A\setminus C)$
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (A), (B)}
+(A) and (B) are the \textbf{distributive laws} for sets:
+$$
+A\cap(B\cup C)=(A\cap B)\cup(A\cap C),
+$$
+$$
+A\cup(B\cap C)=(A\cup B)\cap(A\cup C).
+$$
+
+(C) is false. The correct identity is
+$$
+A\setminus(B\cup C)
+=(A\setminus B)\cap(A\setminus C).
+$$
+
+(D) is false. The correct identity is
+$$
+A\setminus(B\cap C)
+=(A\setminus B)\cup(A\setminus C).
+$$
+
+Therefore,
+$$
+\boxed{\text{(A), (B)}}
+$$
+\end{block}
+
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Question 5}
+
+To prove:
+
+\begin{quote}
+For integers $m,n$, $m+n=n+m$ if and only if addition is
+commutative for integers.
+\end{quote}
+
+Which of the following must be shown?
+
+\begin{enumerate}
+    \item[(A)] If $m+n=n+m$, then addition is commutative for integers.
+    \item[(B)] If addition is commutative for integers, then $m+n=n+m$.
+    \item[(C)] If $m+n\neq n+m$, then addition is not commutative.
+    \item[(D)] Both directions:
+    \begin{itemize}
+        \item[(i)] $m+n=n+m\Rightarrow$ commutativity,
+        \item[(ii)] commutativity $\Rightarrow m+n=n+m$.
+    \end{itemize}
+\end{enumerate}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+
+\begin{block}{Answer: (D)}
+An ``if and only if'' statement
+$$
+P\iff Q
+$$
+requires proving both directions:
+$$
+P\Rightarrow Q
+\qquad\text{and}\qquad
+Q\Rightarrow P.
+$$
+
+Here,
+$$
+P:m+n=n+m
+$$
+and
+$$
+Q:\text{addition is commutative}.
+$$
+
+Therefore, both directions must be shown.
+
+Option (B) gives only one direction, while (D) gives both.
+
+$$
+\boxed{\text{(D)}}
+$$
+\end{block}
+
+\end{frame}
+\end{document}
